@@ -15,7 +15,7 @@ class SignInOne extends Component {
             form,
             validation,
             btnText,
-            onPressBtn,
+            onPress,
         } = this.props;
         const {
             emailPlaceholder,
@@ -47,13 +47,12 @@ class SignInOne extends Component {
                         />
                     </View>
                     <Button
-                        onPress={onPressBtn()}
+                        onPress={onPress()}
                         size="giant" style={styles.button}
                     >{btnText}
                     </Button>
                     <Text style={styles.text}>Do not have an account ? Register Here</Text>
                 </ImageBackground>
-
             </Layout>
         );
     }

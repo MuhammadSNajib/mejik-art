@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import SignInOne from './SignInOne';
 import SignInTwo from './SignInTwo';
+import SignInThree from './SignInThree';
+import SignInFour from './SignInFour';
+import SignInFive from './SignInFive';
 
-const SIGNIN_LAYOUTS = [SignInOne, SignInTwo]
+const SIGNIN_LAYOUTS = [SignInOne, SignInTwo, SignInThree, SignInFour, SignInFive]
 
 
 class SignIn extends Component {
@@ -20,7 +23,10 @@ class SignIn extends Component {
       form,
       validation,
       btnText,
-      onPressBtn,
+      onPress,
+      onPressGoogle,
+      onPressFacebook,
+      onPressTwitter,
       option
     } = this.props;
 
@@ -32,7 +38,11 @@ class SignIn extends Component {
         bgUrl={bgUrl}
         btnText={btnText}
         validation={validation}
-        onPressBtn={onPressBtn}
+        onPress={onPress}
+        onPressGoogle={onPressGoogle}
+        onPressFacebook={onPressFacebook}
+        onPressTwitter={onPressTwitter}
+       // {...this.props}
       />
     );
   }

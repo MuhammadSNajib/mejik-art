@@ -9,7 +9,7 @@ import SignIn from './../layouts/auth/signin';
 storiesOf('Layout', module)
   .addDecorator(withKnobs)
   .add('Login', () => {
-    const option = number("option", 1)
+    const option = number("option", 3)
     const form = object("form", {
       email: "a@a.com",
       emailPlaceholder: "Insert Email",
@@ -26,7 +26,10 @@ storiesOf('Layout', module)
         bgUrl={bgUrl}
         form={form}
         btnText={btnText}
-        onPressBtn={() => action("onPressBtn()")}
+        onPress={() => action("onPress()")}
+        onPressGoogle={() => action("onPressGoogle()")}
+        onPressFacebook={() => action("onPressFacebook()")}
+        onPressTwitter={() => action("onPressTwitter()")}
       />
     )
   });

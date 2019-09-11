@@ -21,7 +21,10 @@ class SignInTwo extends Component {
       form,
       validation,
       btnText,
-      onPressBtn,
+      onPress,
+      onPressGoogle,
+      onPressFacebook,
+      onPressTwitter
     } = this.props;
     const {
       emailPlaceholder,
@@ -66,7 +69,7 @@ class SignInTwo extends Component {
               placeholder={emailPlaceholder}
               value={email}
               style={styles.input}
-              icon={(style) => (<Icon name='email-outline' {...style}/>)}
+              icon={(style) => (<Icon name='email-outline' {...style} />)}
             />
             <Input
               label='Password'
@@ -85,15 +88,80 @@ class SignInTwo extends Component {
               secureTextEntry={!this.state.passwordVisible}
             />
             <Button
-              onPress={onPressBtn()}
+              onPress={onPress()}
               size="giant" style={styles.button}
             >{btnText}
             </Button>
             <Text style={styles.text}>Do not have an account ? Register Here</Text>
           </Layout>
+          <Text style={[styles.text, {color  : 'white'}]}>Login with social account</Text>
+          <View style={styles.socialButtonContainer}>
+          <Button
+            onPress={onPressGoogle()}
+            size="giant"
+            appearance={'ghost'}
+            style={styles.button}
+            
+            icon={(style) => {
+              //alert(JSON.stringify(style))
+              return (
+                <Icon
+                  name={'google'}
+                  {...style}
+                  tintColor={'#fff'}
+                  width={30}
+                  height={30}
+                />
+              )
+            }
+            }
+          >
+          </Button>
+          <Button
+            onPress={onPressFacebook()}
+            size="giant"
+            appearance={'ghost'}
+            style={styles.button}
+            icon={(style) => {
+              //alert(JSON.stringify(style))
+              return (
+                <Icon
+                  name={'facebook'}
+                  {...style}
+                  tintColor={'#fff'}
+                  width={30}
+                  height={30}
+                />
+              )
+            }
+            }
 
+          >
+          </Button>
+          <Button
+            onPress={onPressTwitter()}
+            size="giant"
+            appearance={'ghost'}
+
+            style={styles.button}
+
+            icon={(style) => {
+              //alert(JSON.stringify(style))
+              return (
+                <Icon
+                  name={'twitter'}
+                  {...style}
+                  tintColor={'#fff'}
+                  width={30}
+                  height={30}
+                />
+              )
+            }
+            }
+          >
+          </Button>
+          </View>
         </ImageBackground>
-
       </Layout>
     );
   }
@@ -126,6 +194,9 @@ const styles = StyleSheet.create({
   },
   input: {
     marginTop: '2%'
+  },
+  socialButtonContainer: {
+    flexDirection : 'row',
   }
 })
 
