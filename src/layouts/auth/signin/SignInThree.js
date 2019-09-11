@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ImageBackground, StyleSheet } from 'react-native';
+import { View, ImageBackground, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { Button, Layout, Input, Text, Icon } from 'react-native-ui-kitten';
 
 
@@ -17,14 +17,11 @@ class SignInThree extends Component {
 
   render() {
     const {
-      bgUrl,
       form,
       validation,
       btnText,
+      bgUrl,
       onPress,
-      onPressGoogle,
-      onPressFacebook,
-      onPressTwitter
     } = this.props;
     const {
       emailPlaceholder,
@@ -33,49 +30,43 @@ class SignInThree extends Component {
       password,
     } = form
     return (
-      <Layout
+      <ImageBackground
         style={styles.wrapper}
+        resizeMode='stretch'
+        source={{ uri: bgUrl }}
       >
-        <ImageBackground
-          resizeMode='stretch'
-          style={styles.bgImage}
-          source={{ uri: bgUrl }}
+        <Layout
+          style={styles.titleContainer}
         >
           <Text
             category='h1'
-            style={{
-              fontSize: 50,
-              fontWeight: 'bold',
-              color: '#fff'
-            }}
+            style={styles.titleText}
           >
             Hello
-          </Text>
+                </Text>
           <Text
             category='h1'
-            style={{
-              fontSize: 20,
-              fontWeight: 'bold',
-              color: '#fff'
-            }}
+            style={[styles.titleText, { fontSize: 15, fontWeight: '200' }]}
           >
             Sign in to your account
-          </Text>
-          <Layout
-            style={styles.formContainer}
-          >
+                </Text>
+        </Layout>
+        <Layout
+          style={styles.formContainer}
+        >
+          <View>
             <Input
-              label='Email'
               placeholder={emailPlaceholder}
               value={email}
+              size={'small'}
               style={styles.input}
               icon={(style) => (<Icon name='email-outline' {...style} />)}
             />
             <Input
-              label='Password'
               placeholder={passwordPlaceholder}
               secureTextEntry={true}
               value={password}
+              size={'small'}
               style={styles.input}
               icon={(style) => (
                 <Icon
@@ -87,82 +78,22 @@ class SignInThree extends Component {
               onIconPress={this.onPasswordIconPress}
               secureTextEntry={!this.state.passwordVisible}
             />
+            <TouchableOpacity>
+                <Text style={[styles.text, {alignSelf : 'flex-end'}]}>Forgot your password? </Text>
+            </TouchableOpacity>
+          </View>
+          <View>
             <Button
               onPress={onPress()}
               size="giant" style={styles.button}
             >{btnText}
             </Button>
-            <Text style={styles.text}>Do not have an account ? Register Here</Text>
-          </Layout>
-          <Text style={[styles.text, {color  : 'white'}]}>Login with social account</Text>
-          <View style={styles.socialButtonContainer}>
-          <Button
-            onPress={onPressGoogle()}
-            size="giant"
-            appearance={'ghost'}
-            style={styles.button}
-            
-            icon={(style) => {
-              //alert(JSON.stringify(style))
-              return (
-                <Icon
-                  name={'google'}
-                  {...style}
-                  tintColor={'#fff'}
-                  width={30}
-                  height={30}
-                />
-              )
-            }
-            }
-          >
-          </Button>
-          <Button
-            onPress={onPressFacebook()}
-            size="giant"
-            appearance={'ghost'}
-            style={styles.button}
-            icon={(style) => {
-              //alert(JSON.stringify(style))
-              return (
-                <Icon
-                  name={'facebook'}
-                  {...style}
-                  tintColor={'#fff'}
-                  width={30}
-                  height={30}
-                />
-              )
-            }
-            }
-
-          >
-          </Button>
-          <Button
-            onPress={onPressTwitter()}
-            size="giant"
-            appearance={'ghost'}
-
-            style={styles.button}
-
-            icon={(style) => {
-              //alert(JSON.stringify(style))
-              return (
-                <Icon
-                  name={'twitter'}
-                  {...style}
-                  tintColor={'#fff'}
-                  width={30}
-                  height={30}
-                />
-              )
-            }
-            }
-          >
-          </Button>
+            <TouchableOpacity>
+                <Text style={styles.text}>Don't have an account ? Sign Up</Text>
+            </TouchableOpacity>
           </View>
-        </ImageBackground>
-      </Layout>
+        </Layout>
+      </ImageBackground>
     );
   }
 }
@@ -172,32 +103,37 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   wrapper: {
-    flex: 1
+    flex: 1,
+    alignItems: 'stretch'
+  },
+  titleContainer: {
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    height: 180,
+    justifyContent: 'center'
   },
   formContainer: {
-    marginHorizontal: '10%',
     paddingVertical: 20,
     paddingHorizontal: 20,
-    borderRadius: 10,
-    alignSelf: 'stretch'
-  },
-  bgImage: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'space-between',
+    flexGrow: 1,
+    backgroundColor : 'transparent'
   },
   text: {
-    color: 'black',
     textAlign: 'center',
     alignSelf: 'center',
     marginTop: 20,
+    color: '#fff'
+  },
+  titleText: {
+    fontSize: 35,
+    fontWeight: 'bold',
+    color: '#fff'
   },
   input: {
     marginTop: '2%'
   },
-  socialButtonContainer: {
-    flexDirection : 'row',
-  }
+
 })
 
 export default SignInThree;
