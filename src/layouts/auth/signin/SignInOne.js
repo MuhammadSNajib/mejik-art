@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ImageBackground, StyleSheet } from 'react-native';
+import { View, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Layout, Input, Text, Icon } from 'react-native-ui-kitten';
 
 
@@ -45,14 +45,25 @@ class SignInOne extends Component {
                         category='h1'
                         style={styles.titleText}
                     >
-                        Hello
+                        SIGN IN
                     </Text>
+                    < TouchableOpacity
+                        style={{flexDirection: 'row', alignItems : 'center'}}
+                    >
                     <Text
                         category='h1'
-                        style={[styles.titleText, { fontSize: 15, fontWeight: '200' }]}
+                        style={[styles.titleText, {fontSize : 20}]}
                     >
-                        Sign in to your account
+                        Sign up
                     </Text>
+                    <Icon
+                        name={'arrow-forward-outline'}
+                        tintColor={'#fff'}
+                        width={30}
+                        marginHorizontal={5}
+                        height={30}
+                    />
+                    </TouchableOpacity>
                 </Layout>
                 <Layout
                     style={styles.formContainer}
@@ -64,14 +75,14 @@ class SignInOne extends Component {
                             value={email}
                             size='small'
                             style={styles.input}
-                            textStyle={{color : 'white'}}
+                            textStyle={{ color: 'white' }}
                             icon={(style) => (<Icon name='email-outline' {...style} />)}
                         />
                         <Input
                             label='Password'
                             placeholder={passwordPlaceholder}
                             size='small'
-                            textStyle={{color : 'white'}}
+                            textStyle={{ color: 'white' }}
                             value={password}
                             style={styles.input}
                             icon={(style) => (
@@ -88,7 +99,8 @@ class SignInOne extends Component {
                     <View>
                         <Button
                             onPress={onPress()}
-                            size="giant" style={styles.button}
+                            size="large" 
+                            style={styles.button}
                         >{btnText}
                         </Button>
                         <Text style={styles.text}>Sign in with social account</Text>
@@ -175,9 +187,12 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         backgroundColor: 'transparent',
-        alignItems: 'center',
+        alignItems: 'flex-end',
         height: 180,
-        justifyContent: 'center'
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        paddingHorizontal: 20,
+        paddingBottom: 20
     },
     formContainer: {
         backgroundColor: 'transparent',
@@ -189,24 +204,24 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        color:'white',
+        color: 'white',
         textAlign: 'center',
         alignSelf: 'center',
         marginTop: 40,
     },
     titleText: {
-        fontSize: 35,
+        fontSize: 28,
         fontWeight: 'bold',
+        marginBottom: 3,
         color: '#fff'
     },
     input: {
         marginTop: '2%',
-        backgroundColor: 'transparent',
-        
+        backgroundColor: '#0000004F',
     },
     socialButtonContainer: {
         flexDirection: 'row',
-        alignSelf:'center'
+        alignSelf: 'center'
     }
 })
 
