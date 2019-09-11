@@ -9,17 +9,15 @@ import SignIn from './../layouts/auth/signin';
 storiesOf('Layout', module)
   .addDecorator(withKnobs)
   .add('Login', () => {
-    const option = number("option", 3)
+    const option = number("option", 1)
     const form = object("form", {
-      email: "a@a.com",
-      emailPlaceholder: "Insert Email",
-      password: "Password",
-      passwordPlaceholder: "Insert Password"
+      email: "name@domain.com",
+      emailPlaceholder: "Insert your email",
+      password: "mypassword",
+      passwordPlaceholder: "Insert your password"
     })
-    const btnText = text("btnText", "Login")
+    const btnText = text("btnText", "Sign In")
     const bgUrl = text("bgUrl", "https://i.pinimg.com/originals/a3/4c/2c/a34c2c0df09dadff0dec9619ed368bd0.jpg")
-
-
     return (
       <SignIn
         option={option}
