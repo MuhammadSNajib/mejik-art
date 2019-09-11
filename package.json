@@ -5,7 +5,7 @@
   "scripts": {
     "start": "react-native start",
     "test": "jest",
-    "storybook": "start-storybook -p 7007",
+    "storybook": "(adb reverse tcp:7007 tcp:7007 || true) && start-storybook",
     "prestorybook": "rnstl"
   },
   "config": {
@@ -21,10 +21,12 @@
   "dependencies": {
     "@emotion/core": "^10.0.17",
     "@eva-design/eva": "^1.0.1",
+    "@ui-kitten/eva-icons": "^4.2.0-beta.1",
     "emotion-theming": "^10.0.17",
     "react": "16.8.6",
     "react-native": "0.60.5",
-    "react-native-ui-kitten": "^4.1.1"
+    "react-native-svg": "^9.9.3",
+    "react-native-ui-kitten": "^4.2.0-beta.2"
   },
   "devDependencies": {
     "@babel/core": "^7.5.0",
@@ -33,6 +35,8 @@
     "@storybook/addon-actions": "^5.1.11",
     "@storybook/addon-knobs": "^5.1.11",
     "@storybook/addon-links": "^5.1.11",
+    "@storybook/addon-ondevice-actions": "^5.1.11",
+    "@storybook/addon-ondevice-knobs": "^5.1.11",
     "@storybook/addons": "^5.1.11",
     "@storybook/react-native": "^5.1.11",
     "@storybook/react-native-server": "^5.1.11",
