@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet } from 'react-native';
 import { Button, Layout, Input } from 'react-native-ui-kitten';
 
 class SignInOne extends Component {
     constructor(props) {
         super(props);
-        console.log(props.form);
     }
 
 
@@ -24,43 +23,63 @@ class SignInOne extends Component {
             email,
             password,
         } = form
-        return (     
+        return (
             <Layout
-                style={{
-                    flex: 1
-                }}
+                style={styles.wrapper}
             >
                 <ImageBackground
                     resizeMode='stretch'
                     style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
                     source={{ uri: bgUrl }}>
                     <View >
-                    <Input
-                        label='Email'
-                        placeholder={emailPlaceholder}
-                        value={email}
-                        style={{ width: '75%', marginTop: '2%' }}
-                    />
-                    <Input
-                        label='Password'
-                        placeholder={passwordPlaceholder}
-                        secureTextEntry={true}
-                        value={password}
-                        style={{ width: '75%', marginTop: '2%' }}
-                    />
+                        <Input
+                            label='Email'
+                            placeholder={emailPlaceholder}
+                            value={email}
+                            style={styles.input}
+                        />
+                        <Input
+                            label='Password'
+                            placeholder={passwordPlaceholder}
+                            secureTextEntry={true}
+                            value={password}
+                            style={{ width: '75%', marginTop: '2%' }}
+                        />
                     </View>
                     <Button
                         onPress={onPressBtn()}
-                        size="giant" style={{ width: '75%', position: 'absolute', bottom: 40 }}
+                        size="giant" style={styles.button}
                     >{btnText}
                     </Button>
-                    <Text style={{ color: 'white', textAlign: 'center', alignSelf: 'center', bottom: 10, position: 'absolute' }}>Do not have an account ? Register Here</Text>
-
+                    <Text style={styles.text}>Do not have an account ? Register Here</Text>
                 </ImageBackground>
 
             </Layout>
         );
     }
 }
+
+
+const styles = StyleSheet.create({
+    button: {
+        width: '75%',
+        position: 'absolute',
+        bottom: 40
+    },
+    wrapper: {
+        flex: 1
+    },
+    text: {
+        color: 'white',
+        textAlign: 'center',
+        alignSelf: 'center',
+        bottom: 10,
+        position: 'absolute'
+    },
+    input: {
+        width: '75%',
+        marginTop: '2%'
+    }
+})
 
 export default SignInOne;

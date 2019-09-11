@@ -4,32 +4,29 @@ import { storiesOf } from '@storybook/react-native';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, object, text, number } from '@storybook/addon-knobs';
 
-// eslint-disable-next-line import/extensions
 import SignIn from './../layouts/auth/signin';
-import { BufferView } from '../decoration';
-
-
-// const form = object("form", {
-//   email: "example@domain.com",
-//   emailPlaceholder: "Insert your email",
-//   password: "Password",
-//   passwordPlaceholder: "Insert your password"
-// })
-
-export const propTypes = {
-  form: object("form", {
-    email: "example@domain.com",
-    emailPlaceholder: "Insert your email",
-    password: "Password",
-    passwordPlaceholder: "Insert your password"
-  }),
-  option: number("option", 1),
-  btnText: text("btnText", "Login"),
-  bgUrl: text("bgUrl", "https://melaniepfeffer.files.wordpress.com/2012/09/img_05461.jpg"),
-  onPressBtn: action('onPress'),
-};
-
 
 storiesOf('Layout', module)
   .addDecorator(withKnobs)
-  .add('SignIn', () => <SignIn {...propTypes} />);
+  .add('Login', () => {
+    const option = number("option", 1)
+    const form = object("form", {
+      email: "a@a.com",
+      emailPlaceholder: "Insert Email",
+      password: "Password",
+      passwordPlaceholder: "Insert Password"
+    })
+    const btnText = text("btnText", "Login")
+    const bgUrl = text("bgUrl", "https://i.pinimg.com/originals/a3/4c/2c/a34c2c0df09dadff0dec9619ed368bd0.jpg")
+
+
+    return (
+      <SignIn
+        option={option}
+        bgUrl={bgUrl}
+        form={form}
+        btnText={btnText}
+        onPressBtn={() => action("onPressBtn()")}
+      />
+    )
+  });
