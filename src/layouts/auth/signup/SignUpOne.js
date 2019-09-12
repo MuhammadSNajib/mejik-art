@@ -4,13 +4,25 @@ import { Button, Layout, Input, Text, Icon } from 'react-native-ui-kitten';
 import { Formik, } from 'formik';
 import * as Yup from 'yup';
 
-class NormalInput extends Component {
+class CustomInput extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            passwordVisible: false,
+        };
+    }
+    onPasswordIconPress = (isVisible) => {
+        this.setState({ passwordVisible: isVisible })
+    };
+
+
     render() {
         const {
             field,
             handleChange,
             value,
             error,
+            secure,
         } = this.props
         return (
             <Input
@@ -22,12 +34,13 @@ class NormalInput extends Component {
                 style={styles.input}
                 icon={(style) => (
                     <Icon
-                        name={this.props.iconName}
+                        name={!secure ? this.props.iconName : (this.state.passwordVisible ? 'eye' : 'eye-off')}
                         {...style}
                     />
-                )
-                }
+                )}
                 caption={error || ' '}
+                onIconPress={secure ? (() => this.onPasswordIconPress(!this.state.passwordVisible)) : (() => {})}
+                secureTextEntry={secure && !this.state.passwordVisible}
             />
         )
     }
@@ -35,15 +48,7 @@ class NormalInput extends Component {
 class SignUpOne extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            passwordVisible: false,
-            confirmPasswordVisible: false,
-
-        };
     }
-    onPasswordIconPress = (isVisible, state) => {
-        this.setState({ [state]: isVisible });
-    };
 
 
 
@@ -119,14 +124,14 @@ class SignUpOne extends Component {
                             {formikProps => (
                                 <View style={styles.formContainer}>
                                     <View>
-                                        <NormalInput
+                                        <CustomInput
                                             field={fields[3]}
                                             handleChange={formikProps.handleChange('firstName')}
                                             value={formikProps.values.firstName}
                                             error={formikProps.errors.firstName}
                                             iconName={'person-outline'}
                                         />
-                                        <NormalInput
+                                        <CustomInput
                                             field={fields[4]}
                                             formikProps={formikProps}
                                             handleChange={formikProps.handleChange('lastName')}
@@ -134,7 +139,7 @@ class SignUpOne extends Component {
                                             error={formikProps.errors.lastName}
                                             iconName={'person-outline'}
                                         />
-                                        <NormalInput
+                                        <CustomInput
                                             field={fields[0]}
                                             formikProps={formikProps}
                                             handleChange={formikProps.handleChange('email')}
@@ -142,7 +147,7 @@ class SignUpOne extends Component {
                                             error={formikProps.errors.email}
                                             iconName={'email-outline'}
                                         />
-                                        <NormalInput
+                                        <CustomInput
                                             field={fields[5]}
                                             formikProps={formikProps}
                                             handleChange={formikProps.handleChange('phone')}
@@ -150,45 +155,22 @@ class SignUpOne extends Component {
                                             error={formikProps.errors.phone}
                                             iconName={'phone-outline'}
                                         />
-                                        
-                                        <Input
-                                            label={fields[1].label || 'Password'}
-                                            placeholder={fields[1].placeholder || 'Insert password'}
+                                        <CustomInput
+                                            field={fields[1]}
+                                            formikProps={formikProps}
+                                            handleChange={formikProps.handleChange('password')}
                                             value={formikProps.values.password}
-                                            onChangeText={formikProps.handleChange('password')}
-                                            status={(formikProps.errors.password) ? 'danger' : 'primary'}
-                                            caption={formikProps.errors.password || ' '}
-                                            style={styles.input}
-                                            icon={(style) => (
-                                                <Icon
-                                                    name={this.state.passwordVisible ? 'eye' : 'eye-off'}
-                                                    {...style}
-                                                />
-                                            )
-                                            }
-                                            onIconPress={() => this.onPasswordIconPress(!this.state.passwordVisible, 'passwordVisible')}
-                                            secureTextEntry={!this.state.passwordVisible}
+                                            error={formikProps.errors.password}
+                                            secure={true}
                                         />
-
-                                        <Input
-                                            label={fields[2].label || 'Confirm password'}
-                                            placeholder={fields[2].placeholder || 'Confirm password'}
+                                        <CustomInput
+                                            field={fields[2]}
+                                            formikProps={formikProps}
+                                            handleChange={formikProps.handleChange('confirmPassword')}
                                             value={formikProps.values.confirmPassword}
-                                            onChangeText={formikProps.handleChange('confirmPassword')}
-                                            status={(formikProps.errors.confirmPassword) ? 'danger' : 'primary'}
-                                            caption={formikProps.errors.confirmPassword || ' '}
-                                            style={styles.input}
-                                            icon={(style) => (
-                                                <Icon
-                                                    name={this.state.confirmPasswordVisible ? 'eye' : 'eye-off'}
-                                                    {...style}
-                                                />
-                                            )
-                                            }
-                                            onIconPress={() => this.onPasswordIconPress(!this.state.confirmPasswordVisible, 'confirmPasswordVisible')}
-                                            secureTextEntry={!this.state.confirmPasswordVisible}
+                                            error={formikProps.errors.confirmPassword}
+                                            secure={true}
                                         />
-
                                     </View>
                                     <View>
                                         <Button
