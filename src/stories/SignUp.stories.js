@@ -6,16 +6,41 @@ import { withKnobs, object, text, number, } from '@storybook/addon-knobs';
 
 import SignUp from './../layouts/auth/signup';
 
-storiesOf('Layout', module)
-  .addDecorator(withKnobs)
-  .add('SignUp', () => {
-    const option = number(
-      "option",
-      1
-    )
-    const fields = object("fields", [
+const props = {
+    option: 1,
+    bgImg: {
+        url: 'https://3.bp.blogspot.com/-WBNUWC44QYM/XJqrXjZYsoI/AAAAAAAABB0/-UZWkkKo4_0MnpBKFSnVjl47CM5ZxpkrACKgBGAs/w1080-h1920-c/night-sky-stars-scenery-comet-uhdpaper.com-4K-185.jpg',
+    },
+    socialButtons: [
+        {
+            name: 'twitter',
+            borderColor: '#3741A8',
+            color: '#3741A8',
+            onPress: () => {
+                alert('twitter')
+            }
+        },
+        {
+            name: 'google',
+            borderColor: '#3741A8',
+            color: '#3741A8',
+            onPress: () => {
+                alert('google')
+            }
+        },
+        {
+            name: 'facebook',
+            borderColor: '#3741A8',
+            color: '#3741A8',
+            onPress: () => {
+                alert('facebook')
+            }
+        }
+    ],
+    fields: [
         {
             label: 'Email',
+            placeholder: 'Insert your email',
             validation: {
                 msgRequired: 'Required !',
                 message: 'Email Not Valid!'
@@ -23,26 +48,78 @@ storiesOf('Layout', module)
         },
         {
             label: 'Password',
+            placeholder: 'Insert your password',
             validation: {
                 msgRequired: 'Required !',
                 minChr: 6,
-                message: 'Password must min 6 charcter'
+                message: 'Password must min 6 character'
             }
         },
-    ])
-    const btnSubmit = object("btnSubmit", {
-        label: 'LOGIN',
-    })
-   
-    return (
-      <SignUp
-        // option={option}
-        fields={fields}
-        btnSubmit={ {
-            ...btnSubmit,
-            onPress : (value) => {
+        {
+            label: 'Confirm password',
+            placeholder: 'Confirm your password',
+            validation: {
+                msgRequired: 'Required !',
+                minChr: 6,
+                message: 'Password must match'
+            }
+        },
+        {
+            label: 'First name',
+            placeholder: 'Insert your first name',
+            validation: {
+                msgRequired: 'Required !',
+                minChr: 2,
+                message: 'First name must min 2 character!'
+            }
+        },
+        {
+            label: 'Last name',
+            placeholder: 'Insert your last name',
+            validation: {
+                msgRequired: 'Required !',
+                minChr: 2,
+                message: 'Last Name must min 2 character!'
+            }
+        },
+
+        {
+            label: 'Phone number',
+            placeholder: 'Insert your phone number',
+            validation: {
+                msgRequired: 'Required !',
+                minChr : 12,
+                regex: /\+?([ -]?\d+)+|\(\d+\)([ -]\d+)/,
+                message: 'Phone Number is Not Valid!'
+            }
+        },
+
+
+    ],
+    btnSubmit: {
+        label: 'Sign Up',
+        onPress: (value) => {
             alert(JSON.stringify(value))
-        }}}
-      />
-    )
-  });
+        }
+    }
+}
+
+storiesOf('Layout', module)
+    .addDecorator(withKnobs)
+    .add('SignUp', () => {
+        const option = number("option", props.option)
+        const bgImg = object('bgImg', props.bgImg)
+        const fields = object("fields", props.fields)
+        const socialButtons = object("socialButtons", props.socialButtons)
+        const btnSubmit = object("btnSubmit", props.btnSubmit)
+
+        return (
+            <SignUp
+                option={option}
+                fields={fields}
+                bgImg={bgImg}
+                btnSubmit={btnSubmit}
+                socialButtons={socialButtons}
+            />
+        )
+    });

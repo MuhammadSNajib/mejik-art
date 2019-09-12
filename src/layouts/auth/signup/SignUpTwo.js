@@ -4,7 +4,7 @@ import { Button, Layout, Input, Text, Icon } from 'react-native-ui-kitten';
 import { Formik, } from 'formik';
 import * as Yup from 'yup';
 
-class SignUp extends Component {
+class SignUpTwo extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -147,4 +147,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default SignUp;
+export default SignUpTwo;
