@@ -5,8 +5,7 @@ import SignInTwo from './SignInTwo';
 import SignInThree from './SignInThree';
 import SignInFour from './SignInFour';
 import SignInFive from './SignInFive';
-//, , , SignInFive
-const SIGNIN_LAYOUTS = [SignInOne, SignInTwo, SignInThree, SignInFour]
+const SIGNIN_LAYOUTS = [SignInOne, SignInTwo, SignInThree, SignInFour, SignInFive]
 
 
 class SignIn extends Component {
