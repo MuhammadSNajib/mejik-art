@@ -5,8 +5,8 @@ import SignInTwo from './SignInTwo';
 import SignInThree from './SignInThree';
 import SignInFour from './SignInFour';
 import SignInFive from './SignInFive';
-
-const SIGNIN_LAYOUTS = [SignInOne, SignInTwo, SignInThree, SignInFour, SignInFive]
+//, , , SignInFive
+const SIGNIN_LAYOUTS = [SignInOne, SignInTwo, SignInThree, SignInFour]
 
 
 class SignIn extends Component {
@@ -19,14 +19,10 @@ class SignIn extends Component {
 
   render() {
     const {
-      bgUrl,
-      form,
-      validation,
-      btnText,
-      onPress,
-      onPressGoogle,
-      onPressFacebook,
-      onPressTwitter,
+      bgImg,
+      fields,
+      socialButtons,
+      btnSubmit,
       option
     } = this.props;
 
@@ -34,15 +30,11 @@ class SignIn extends Component {
 
     return (
       <Layout
-        form={form}
-        bgUrl={bgUrl}
-        btnText={btnText}
-        validation={validation}
-        onPress={onPress}
-        onPressGoogle={onPressGoogle}
-        onPressFacebook={onPressFacebook}
-        onPressTwitter={onPressTwitter}
-       // {...this.props}
+        bgImg={bgImg}
+        fields={fields}
+        socialButtons={socialButtons}
+        btnSubmit={btnSubmit}
+      // {...this.props}
       />
     );
   }

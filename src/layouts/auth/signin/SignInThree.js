@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, ImageBackground, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { View, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Layout, Input, Text, Icon } from 'react-native-ui-kitten';
+import { Formik, } from 'formik';
+import * as Yup from 'yup';
 
 
 class SignInThree extends Component {
@@ -17,23 +19,19 @@ class SignInThree extends Component {
 
   render() {
     const {
-      form,
-      validation,
-      btnText,
-      bgUrl,
-      onPress,
-    } = this.props;
-    const {
-      emailPlaceholder,
-      passwordPlaceholder,
-      email,
-      password,
-    } = form
+      bgImg,
+      fields,
+      btnSubmit,
+  } = this.props;
+  const validationSchema = Yup.object().shape({
+      email: Yup.string().required(fields[0].validation.msgRequired).email(fields[0].validation.message),
+      password: Yup.string().required(fields[1].validation.msgRequired).min(fields[1].validation.minChr, fields[1].validation.message),
+  })
     return (
       <ImageBackground
         style={styles.wrapper}
         resizeMode='stretch'
-        source={{ uri: bgUrl }}
+        source={{ uri: bgImg.url }}
       >
         <Layout
           style={styles.titleContainer}
@@ -43,56 +41,70 @@ class SignInThree extends Component {
             style={styles.titleText}
           >
             Hello
-                </Text>
+                    </Text>
           <Text
             category='h1'
             style={[styles.titleText, { fontSize: 15, fontWeight: '200' }]}
           >
             Sign in to your account
-                </Text>
+                    </Text>
         </Layout>
-        <Layout
-          style={styles.formContainer}
-        >
-          <View>
-            <Input
-              placeholder={emailPlaceholder}
-              value={email}
-              size={'small'}
-              style={styles.input}
-              icon={(style) => (<Icon name='email-outline' {...style} />)}
-            />
-            <Input
-              placeholder={passwordPlaceholder}
-              secureTextEntry={true}
-              value={password}
-              size={'small'}
-              style={styles.input}
-              icon={(style) => (
-                <Icon
-                  name={this.state.passwordVisible ? 'eye' : 'eye-off'}
-                  {...style}
+          <Formik
+            initialValues={{
+              email: '',
+              password: '',
+            }}
+            onSubmit={(value) => { btnSubmit.onPress(value) }}
+            validationSchema={validationSchema}
+          >{formikProps => (
+            <View style={styles.formContainer}>
+              <View>
+                <Input
+                  
+                  placeholder={fields[0].placeholder || 'Insert email'}
+                  value={formikProps.values.email}
+                  onChangeText={formikProps.handleChange('email')}
+                  status={(formikProps.errors.email) ? 'danger' : 'primary'}
+                  style={styles.input}
+                  icon={(style) => (<Icon name='email-outline' {...style} />)}
+                  caption={formikProps.errors.email}
+
                 />
-              )
-              }
-              onIconPress={this.onPasswordIconPress}
-              secureTextEntry={!this.state.passwordVisible}
-            />
-            <TouchableOpacity>
-                <Text style={[styles.text, {alignSelf : 'flex-end'}]}>Forgot your password? </Text>
-            </TouchableOpacity>
-          </View>
-          <View>
-            <Button
-              onPress={onPress()}
-              size="giant" style={styles.button}
-            >{btnText}
-            </Button>
-            <TouchableOpacity>
+                <Input
+                  
+                  placeholder={fields[1].placeholder || 'Insert Password'}
+                  value={formikProps.values.password}
+                  onChangeText={formikProps.handleChange('password')}
+                  status={(formikProps.errors.password) ? 'danger' : 'primary'}
+                  caption={formikProps.errors.password || ''}
+                  value={formikProps.values.password}
+                  style={styles.input}
+                  icon={(style) => (
+                    <Icon
+                      name={this.state.passwordVisible ? 'eye' : 'eye-off'}
+                      {...style}
+                    />
+                  )
+                  }
+                  onIconPress={this.onPasswordIconPress}
+                  secureTextEntry={!this.state.passwordVisible}
+                />
+              </View>
+              <View>
+              <Button
+                onPress={formikProps.handleSubmit}
+                size="large"
+                style={styles.button}
+                disabled={!formikProps.isValid}
+              >{btnSubmit.label}
+              </Button>
+              <TouchableOpacity>
                 <Text style={styles.text}>Don't have an account ? Sign Up</Text>
-            </TouchableOpacity>
-          </View>
-        </Layout>
+              </TouchableOpacity>
+              </View>
+            </View>
+          )}
+          </Formik>
       </ImageBackground>
     );
   }
@@ -117,7 +129,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     justifyContent: 'space-between',
     flexGrow: 1,
-    backgroundColor : 'transparent'
+    backgroundColor: 'transparent'
   },
   text: {
     textAlign: 'center',

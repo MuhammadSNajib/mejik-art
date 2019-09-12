@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { View, ImageBackground, StyleSheet } from 'react-native';
+import { View, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Layout, Input, Text, Icon } from 'react-native-ui-kitten';
+import { Formik, } from 'formik';
+import * as Yup from 'yup';
+
 
 
 class SignInTwo extends Component {
@@ -17,17 +20,13 @@ class SignInTwo extends Component {
 
     render() {
         const {
-            form,
-            validation,
-            btnText,
-            onPress,
+            fields,
+            btnSubmit,
         } = this.props;
-        const {
-            emailPlaceholder,
-            passwordPlaceholder,
-            email,
-            password,
-        } = form
+        const validationSchema = Yup.object().shape({
+            email: Yup.string().required(fields[0].validation.msgRequired).email(fields[0].validation.message),
+            password: Yup.string().required(fields[1].validation.msgRequired).min(fields[1].validation.minChr, fields[1].validation.message),
+        })
         return (
             <Layout
                 style={styles.wrapper}
@@ -49,21 +48,37 @@ class SignInTwo extends Component {
                     </Text>
                 </Layout>
                 <Layout
-                    style={styles.formContainer}
-                >
-                    <View>
+                    style={{flexGrow : 1}}
+                >   
+                    <Formik
+                        initialValues={{
+                            email: '',
+                            password: '',
+                        }}
+                        onSubmit={(value) => { btnSubmit.onPress(value)}}
+                        validationSchema={validationSchema}
+                    >{formikProps =>(
+                    <View style={styles.formContainer}>
+                        <View>
                         <Input
-                            label='Email'
-                            placeholder={emailPlaceholder}
-                            value={email}
+                            label={fields[0].label || 'Email'}
+                            placeholder={fields[0].placeholder || 'Insert email'}
+                            value={formikProps.values.email}
+                            onChangeText={formikProps.handleChange('email')}
+                            status={(formikProps.errors.email) ? 'danger' : 'primary'}
                             style={styles.input}
                             icon={(style) => (<Icon name='email-outline' {...style} />)}
+                            caption={formikProps.errors.email}
+                            
                         />
                         <Input
-                            label='Password'
-                            placeholder={passwordPlaceholder}
-                            secureTextEntry={true}
-                            value={password}
+                            label={fields[1].label || 'Password'}
+                            placeholder={fields[1].placeholder || 'Insert Password'}
+                            value={formikProps.values.password}
+                            onChangeText={formikProps.handleChange('password')}
+                            status={(formikProps.errors.password) ? 'danger' : 'primary'}
+                            caption={formikProps.errors.password || ''}
+                            value={formikProps.values.password}
                             style={styles.input}
                             icon={(style) => (
                                 <Icon
@@ -75,15 +90,22 @@ class SignInTwo extends Component {
                             onIconPress={this.onPasswordIconPress}
                             secureTextEntry={!this.state.passwordVisible}
                         />
-                    </View>
-                    <View>
+                        </View>
+                        <View>
                         <Button
-                            onPress={onPress()}
-                            size="giant" style={styles.button}
-                        >{btnText}
+                            onPress={formikProps.handleSubmit}
+                            size="large"
+                            style={styles.button}
+                            disabled={!formikProps.isValid}
+                        >{btnSubmit.label}
                         </Button>
-                        <Text style={styles.text}>Do not have an account ? Register Here</Text>
+                        <TouchableOpacity>
+                            <Text style={styles.text}>Don't have an account ? Sign Up</Text>
+                        </TouchableOpacity>
+                        </View>
                     </View>
+                    )}
+                    </Formik>
                 </Layout>
             </Layout>
         );

@@ -6,11 +6,13 @@
 
 function loadStories() {
   require('../src/stories/SignIn.stories');
+  require('../src/stories/SignUp.stories');
   
 }
 
 const stories = [
   '../src/stories/SignIn.stories',
+  '../src/stories/SignUp.stories',
   
 ];
 

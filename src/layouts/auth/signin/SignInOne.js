@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Layout, Input, Text, Icon } from 'react-native-ui-kitten';
-
+import { Formik, } from 'formik';
+import * as Yup from 'yup';
 
 class SignInOne extends Component {
     constructor(props) {
@@ -17,26 +18,21 @@ class SignInOne extends Component {
 
     render() {
         const {
-            bgUrl,
-            form,
-            validation,
-            btnText,
-            onPress,
-            onPressGoogle,
-            onPressFacebook,
-            onPressTwitter
+            bgImg,
+            fields,
+            socialButtons,
+            btnSubmit,
         } = this.props;
-        const {
-            emailPlaceholder,
-            passwordPlaceholder,
-            email,
-            password,
-        } = form
+        const validationSchema = Yup.object().shape({
+            email: Yup.string().required(fields[0].validation.msgRequired).email(fields[0].validation.message),
+            password: Yup.string().required(fields[1].validation.msgRequired).min(fields[1].validation.minChr, fields[1].validation.message),
+        })
         return (
+
             <ImageBackground
                 style={styles.wrapper}
                 resizeMode='stretch'
-                source={{ uri: bgUrl }}
+                source={{ uri: bgImg.url }}
             >
                 <Layout
                     style={styles.titleContainer}
@@ -48,130 +44,105 @@ class SignInOne extends Component {
                         SIGN IN
                     </Text>
                     < TouchableOpacity
-                        style={{flexDirection: 'row', alignItems : 'center'}}
+                        style={{ flexDirection: 'row', alignItems: 'center' }}
                     >
-                    <Text
-                        category='h1'
-                        style={[styles.titleText, {fontSize : 20}]}
-                    >
-                        Sign up
+                        <Text
+                            category='h1'
+                            style={[styles.titleText, { fontSize: 20 }]}
+                        >
+                            Sign up
                     </Text>
-                    <Icon
-                        name={'arrow-forward-outline'}
-                        tintColor={'#fff'}
-                        width={30}
-                        marginHorizontal={5}
-                        height={30}
-                    />
+                        <Icon
+                            name={'arrow-forward-outline'}
+                            tintColor={'#fff'}
+                            width={30}
+                            marginHorizontal={5}
+                            height={30}
+                        />
                     </TouchableOpacity>
                 </Layout>
-                <Layout
-                    style={styles.formContainer}
-                >
-                    <View>
-                        <Input
-                            label='Email'
-                            placeholder={emailPlaceholder}
-                            value={email}
-                            size='small'
-                            style={styles.input}
-                            textStyle={{ color: 'white' }}
-                            icon={(style) => (<Icon name='email-outline' {...style} />)}
-                        />
-                        <Input
-                            label='Password'
-                            placeholder={passwordPlaceholder}
-                            size='small'
-                            textStyle={{ color: 'white' }}
-                            value={password}
-                            style={styles.input}
-                            icon={(style) => (
-                                <Icon
-                                    name={this.state.passwordVisible ? 'eye' : 'eye-off'}
-                                    {...style}
-                                />
-                            )
-                            }
-                            onIconPress={this.onPasswordIconPress}
-                            secureTextEntry={!this.state.passwordVisible}
-                        />
-                    </View>
-                    <View>
-                        <Button
-                            onPress={onPress()}
-                            size="large" 
-                            style={styles.button}
-                        >{btnText}
-                        </Button>
-                        <Text style={styles.text}>Sign in with social account</Text>
-                        <View style={styles.socialButtonContainer}>
-                            <Button
-                                onPress={onPressGoogle()}
-                                size="giant"
-                                appearance={'ghost'}
-                                style={styles.button}
+                <Formik
+                    initialValues={{
+                        email: '',
+                        password: '',
+                    }}
+                    onSubmit={(value) => { btnSubmit.onPress(value) }}
+                    validationSchema={validationSchema}
+                >{formikProps => (
+                    <Layout style={styles.formContainer}>
+                        <View>
+                            <Input
+                                label={fields[0].label || 'Email'}
+                                placeholder={fields[0].placeholder || 'Insert email'}
+                                value={formikProps.values.email}
+                                onChangeText={formikProps.handleChange('email')}
+                                status={(formikProps.errors.email) ? 'danger' : 'primary'}
+                                style={styles.input}
+                                icon={(style) => (<Icon name='email-outline' {...style} />)}
+                                caption={formikProps.errors.email}
+                                textStyle={{ color: 'white' }}
 
-                                icon={(style) => {
-                                    //alert(JSON.stringify(style))
-                                    return (
-                                        <Icon
-                                            name={'google'}
-                                            {...style}
-                                            tintColor={'#fff'}
-                                            width={30}
-                                            height={30}
-                                        />
-                                    )
+                            />
+                            <Input
+                                label={fields[1].label || 'Password'}
+                                placeholder={fields[1].placeholder || 'Insert Password'}
+                                value={formikProps.values.password}
+                                onChangeText={formikProps.handleChange('password')}
+                                status={(formikProps.errors.password) ? 'danger' : 'primary'}
+                                caption={formikProps.errors.password || ''}
+                                textStyle={{ color: 'white' }}
+                                value={formikProps.values.password}
+                                style={styles.input}
+                                icon={(style) => (
+                                    <Icon
+                                        name={this.state.passwordVisible ? 'eye' : 'eye-off'}
+                                        {...style}
+                                    />
+                                )
                                 }
-                                }
-                            >
-                            </Button>
-                            <Button
-                                onPress={onPressFacebook()}
-                                size="giant"
-                                appearance={'ghost'}
-                                style={styles.button}
-                                icon={(style) => {
-                                    //alert(JSON.stringify(style))
-                                    return (
-                                        <Icon
-                                            name={'facebook'}
-                                            {...style}
-                                            tintColor={'#fff'}
-                                            width={30}
-                                            height={30}
-                                        />
-                                    )
-                                }
-                                }
-
-                            >
-                            </Button>
-                            <Button
-                                onPress={onPressTwitter()}
-                                size="giant"
-                                appearance={'ghost'}
-
-                                style={styles.button}
-
-                                icon={(style) => {
-                                    //alert(JSON.stringify(style))
-                                    return (
-                                        <Icon
-                                            name={'twitter'}
-                                            {...style}
-                                            tintColor={'#fff'}
-                                            width={30}
-                                            height={30}
-                                        />
-                                    )
-                                }
-                                }
-                            >
-                            </Button>
+                                onIconPress={this.onPasswordIconPress}
+                                secureTextEntry={!this.state.passwordVisible}
+                            />
                         </View>
+                        <Button
+                            onPress={formikProps.handleSubmit}
+                            size="large"
+                            style={styles.button}
+                            disabled={!formikProps.isValid}
+                        >{btnSubmit.label}
+                        </Button>
+
+                    </Layout>
+                )}
+                </Formik>
+                <View>
+                    <Text style={styles.text}>Sign in with social account</Text>
+                    <View style={styles.socialButtonContainer}>
+                        {socialButtons.map((data) => (
+                            <Button
+                                onPress={() => data.onPress()}
+                                size="giant"
+                                appearance={'ghost'}
+                                style={styles.button}
+
+                                icon={(style) => {
+                                    //alert(JSON.stringify(style))
+                                    return (
+                                        <Icon
+                                            name={data.name}
+                                            {...style}
+                                            tintColor={data.color}
+                                            width={30}
+                                            height={30}
+                                        />
+                                    )
+                                }
+                                }
+                            >
+                            </Button>
+                        ))}
                     </View>
-                </Layout>
+                </View>
             </ImageBackground>
         );
     }
