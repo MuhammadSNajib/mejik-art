@@ -23,7 +23,7 @@ const props = {
         {
             name: 'google',
             borderColor: '#DB4437',
-            //color: '#DB4437',
+            color: '#DB4437',
             onPress: () => {
                 alert('google')
             }
