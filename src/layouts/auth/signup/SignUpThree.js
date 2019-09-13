@@ -35,6 +35,7 @@ class CustomInput extends Component {
               onChangeText={onChange}
               status={(touched && error) ? 'danger' : 'primary'}
               style={styles.input}
+              labelStyle = {[styles.labelText]}
               icon={(style) => (
                   <Icon
                       name={!secure ? this.props.iconName : (this.state.passwordVisible ? 'eye' : 'eye-off')}
@@ -85,6 +86,7 @@ class SignUpThree extends Component {
         {/* <KeyboardAvoidingView behavior="padding" enabled> */}
           <View style={styles.titleContainer}>
             <Text category='h1'style={styles.titleText}>SignUp</Text>
+            <Text category='h1' style={[styles.titleText, { fontSize: 15, fontWeight: '200' }]}>Sign up with email to continue</Text>
 
           </View>
             <ScrollView>
@@ -165,6 +167,13 @@ class SignUpThree extends Component {
                       secure={true}
                   />
 
+                  <CheckBox
+                      checked={formikProps.values.isAgree}
+                      onChange={formikProps.handleChange('isAgree')}
+                      text={"By creating account i agree to the Terms of Use and Privacy Policy"}
+                      textStyle={[styles.text, {marginTop : 0, textAlign : 'left'}]}
+                  />  
+
                   <Button
                       onPress={formikProps.handleSubmit}
                       size="large"
@@ -202,6 +211,7 @@ const styles = StyleSheet.create({
 
   },
   button : {
+    marginTop : '2%',
     width : '100%',
   },
   input : {
@@ -218,6 +228,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff'
   },
+  text: {
+    textAlign: 'center',
+    alignSelf: 'center',
+    marginTop: 20,
+    color: '#fff'
+  },
+  labelText : {
+    textAlign : 'left',
+    color : '#fff'
+  }
   
 })
 
