@@ -22,7 +22,7 @@ class SignIn extends Component {
       fields,
       socialButtons,
       btnSubmit,
-      option
+      option,
     } = this.props;
 
     const Layout = SIGNIN_LAYOUTS[option - 1] || SIGNIN_LAYOUTS[0]
@@ -37,6 +37,14 @@ class SignIn extends Component {
       />
     );
   }
+}
+
+SignIn.PropTypes = {
+  option : PropTypes.number,
+  bgImg : PropTypes.object,
+  socialButtons : PropTypes.arrayOf(PropTypes.object),
+  fields : PropTypes.arrayOf(PropTypes.object),
+  btnSubmit : PropTypes.object
 }
 
 export default SignIn;

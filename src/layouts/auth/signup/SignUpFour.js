@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
-class SignUpThree extends Component {
+class SignUpFour extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,10 +11,10 @@ class SignUpThree extends Component {
   render() {
     return (
       <View>
-        <Text> SignUpThree </Text>
+        <Text> SignUpFour </Text>
       </View>
     );
   }
 }
 
-export default SignUpThree;
+export default SignUpFour;

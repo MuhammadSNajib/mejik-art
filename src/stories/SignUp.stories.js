@@ -14,24 +14,24 @@ const props = {
     socialButtons: [
         {
             name: 'twitter',
-            borderColor: '#3741A8',
-            color: '#3741A8',
+            borderColor: '#1DA1F2',
+            color: '#1DA1F2',
             onPress: () => {
                 alert('twitter')
             }
         },
         {
             name: 'google',
-            borderColor: '#3741A8',
-            color: '#3741A8',
+            borderColor: '#DB4437',
+            //color: '#DB4437',
             onPress: () => {
                 alert('google')
             }
         },
         {
             name: 'facebook',
-            borderColor: '#3741A8',
-            color: '#3741A8',
+            borderColor: '#4267b2',
+            color: '#4267b2',
             onPress: () => {
                 alert('facebook')
             }

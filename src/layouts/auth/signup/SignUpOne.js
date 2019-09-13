@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, ImageBackground, StyleSheet, ScrollView, KeyboardAvoidingView } from 'react-native';
-import { Button, Layout, Input, Text, Icon } from 'react-native-ui-kitten';
+import { Button, Layout, Input, Text, Icon,  CheckBox } from 'react-native-ui-kitten';
 import { Formik, } from 'formik';
 import * as Yup from 'yup';
 
@@ -19,18 +19,21 @@ class CustomInput extends Component {
     render() {
         const {
             field,
-            handleChange,
+            onChange,
+            onBlur,
             value,
             error,
             secure,
+            touched
         } = this.props
         return (
             <Input
                 label={field.label}
                 placeholder={field.placeholder}
+                onBlur={onBlur}
                 value={value}
-                onChangeText={handleChange}
-                status={(error) ? 'danger' : 'primary'}
+                onChangeText={onChange}
+                status={(touched && error) ? 'danger' : 'primary'}
                 style={styles.input}
                 icon={(style) => (
                     <Icon
@@ -38,16 +41,18 @@ class CustomInput extends Component {
                         {...style}
                     />
                 )}
-                caption={error || ' '}
-                onIconPress={secure ? (() => this.onPasswordIconPress(!this.state.passwordVisible)) : (() => {})}
+                caption={(touched && error) || ' '}
+                onIconPress={secure ? (() => this.onPasswordIconPress(!this.state.passwordVisible)) : (() => { })}
                 secureTextEntry={secure && !this.state.passwordVisible}
             />
         )
     }
 }
+
 class SignUpOne extends Component {
     constructor(props) {
         super(props);
+
     }
 
 
@@ -56,6 +61,7 @@ class SignUpOne extends Component {
         const {
             fields,
             btnSubmit,
+            socialButtons,
             bgImg,
         } = this.props;
         const validationSchema = Yup.object().shape(
@@ -97,15 +103,11 @@ class SignUpOne extends Component {
                             <Text
                                 category='h1'
                                 style={styles.titleText}
-                            >
-                                SignUp
-                    </Text>
+                            >SignUp</Text>
                             <Text
                                 category='h1'
                                 style={[styles.titleText, { fontSize: 15, fontWeight: '200' }]}
-                            >
-                                Register your account
-                    </Text>
+                            >Register your account</Text>
                         </View>
                         <Formik
                             initialValues={
@@ -116,6 +118,7 @@ class SignUpOne extends Component {
                                     firstName: '',
                                     lastName: '',
                                     phone: '',
+
                                 }
                             }
                             onSubmit={(value) => { btnSubmit.onPress(value) }}
@@ -123,10 +126,41 @@ class SignUpOne extends Component {
                         >
                             {formikProps => (
                                 <View style={styles.formContainer}>
+                                    <Text category={'h1'} style={styles.contentText}>Sign in with Social Account</Text>
+
+                                    <View style={styles.rowContainer}>
+                                        {socialButtons.map((data) => (
+                                            <Button
+                                                onPress={() => data.onPress()}
+                                                size="giant"
+                                                appearance={'ghost'}
+                                                icon={(style) => {
+                                                    return (
+                                                        <Icon
+                                                            name={data.name}
+                                                            {...style}
+                                                            tintColor={data.color || '#000000'}
+                                                            width={30}
+                                                            height={30}
+                                                        />
+                                                    )
+                                                }}
+                                            >
+                                            </Button>
+                                        ))}
+                                    </View>
+                                    <View style={styles.rowContainer}>
+                                        <View style={{ borderBottomWidth: 0.5, flexGrow: 1 }}></View>
+                                        <Text category={'h1'} style={styles.orText}>OR</Text>
+                                        <View style={{ borderBottomWidth: 0.5, flexGrow: 1 }}></View>
+                                    </View>
+                                    <Text category={'h1'} style={styles.contentText}>Sign Up with email</Text>
                                     <View>
                                         <CustomInput
                                             field={fields[3]}
-                                            handleChange={formikProps.handleChange('firstName')}
+                                            onChange={formikProps.handleChange('firstName')}
+                                            onBlur={formikProps.handleBlur('firstName')}
+                                            touched={formikProps.touched.firstName}
                                             value={formikProps.values.firstName}
                                             error={formikProps.errors.firstName}
                                             iconName={'person-outline'}
@@ -134,7 +168,9 @@ class SignUpOne extends Component {
                                         <CustomInput
                                             field={fields[4]}
                                             formikProps={formikProps}
-                                            handleChange={formikProps.handleChange('lastName')}
+                                            onChange={formikProps.handleChange('lastName')}
+                                            onBlur={formikProps.handleBlur('lastName')}
+                                            touched={formikProps.touched.lastName}
                                             value={formikProps.values.lastName}
                                             error={formikProps.errors.lastName}
                                             iconName={'person-outline'}
@@ -142,7 +178,9 @@ class SignUpOne extends Component {
                                         <CustomInput
                                             field={fields[0]}
                                             formikProps={formikProps}
-                                            handleChange={formikProps.handleChange('email')}
+                                            onChange={formikProps.handleChange('email')}
+                                            onBlur={formikProps.handleBlur('email')}
+                                            touched={formikProps.touched.email}
                                             value={formikProps.values.email}
                                             error={formikProps.errors.email}
                                             iconName={'email-outline'}
@@ -150,7 +188,9 @@ class SignUpOne extends Component {
                                         <CustomInput
                                             field={fields[5]}
                                             formikProps={formikProps}
-                                            handleChange={formikProps.handleChange('phone')}
+                                            onChange={formikProps.handleChange('phone')}
+                                            onBlur={formikProps.handleBlur('phone')}
+                                            touched={formikProps.touched.phone}
                                             value={formikProps.values.phone}
                                             error={formikProps.errors.phone}
                                             iconName={'phone-outline'}
@@ -158,7 +198,9 @@ class SignUpOne extends Component {
                                         <CustomInput
                                             field={fields[1]}
                                             formikProps={formikProps}
-                                            handleChange={formikProps.handleChange('password')}
+                                            onChange={formikProps.handleChange('password')}
+                                            onBlur={formikProps.handleBlur('password')}
+                                            touched={formikProps.touched.password}
                                             value={formikProps.values.password}
                                             error={formikProps.errors.password}
                                             secure={true}
@@ -166,13 +208,19 @@ class SignUpOne extends Component {
                                         <CustomInput
                                             field={fields[2]}
                                             formikProps={formikProps}
-                                            handleChange={formikProps.handleChange('confirmPassword')}
+                                            onChange={formikProps.handleChange('confirmPassword')}
+                                            onBlur={formikProps.handleBlur('confirmPassword')}
+                                            touched={formikProps.touched.confirmPassword}
                                             value={formikProps.values.confirmPassword}
                                             error={formikProps.errors.confirmPassword}
                                             secure={true}
                                         />
                                     </View>
                                     <View>
+                                        {/* <CheckBox 
+                                            checked={this.state.checked}
+                                            onChange={this.onChange}
+                                        /> */}
                                         <Button
                                             onPress={formikProps.handleSubmit}
                                             size="large"
@@ -180,7 +228,6 @@ class SignUpOne extends Component {
                                             disabled={!formikProps.isValid}
                                         >{btnSubmit.label}
                                         </Button>
-                                        <Text style={styles.text}>Do not have an account ? Register Here</Text>
                                     </View>
                                 </View>
                             )}
@@ -195,6 +242,22 @@ class SignUpOne extends Component {
 const styles = StyleSheet.create({
     button: {
         marginTop: 10
+    },
+    orText: {
+        marginHorizontal: 10,
+        fontSize: 28,
+        color: "#555555",
+        fontWeight: "bold",
+    },
+    contentText: {
+        fontSize: 15,
+        textAlign: "center",
+
+    },
+    rowContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent : 'space-evenly'
     },
     wrapper: {
         flex: 1,

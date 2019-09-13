@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import SignUpOne from './SignUpOne';
 import SignUpTwo from './SignUpTwo';
 import SignUpThree from './SignUpThree';
+import SignUpFour from './SignUpFour';
 // import SignUpFour from './SignUpFour';
 // import SignUpFive from './SignUpFive';
 // SignUpFour, SignUpFive
-const SignUp_LAYOUTS = [SignUpOne, SignUpTwo, SignUpThree ]
+const SignUp_LAYOUTS = [SignUpOne, SignUpTwo, SignUpThree, SignUpFour ]
 
 
 class SignUp extends Component {
