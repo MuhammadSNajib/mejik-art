@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, ImageBackground, StyleSheet, ScrollView, KeyboardAvoidingView } from 'react-native';
-import { Button, Layout, Input, Text, Icon,  CheckBox } from 'react-native-ui-kitten';
+import { View, ImageBackground, StyleSheet, ScrollView, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { Button, Layout, Input, Text, Icon, CheckBox } from 'react-native-ui-kitten';
 import { Formik, } from 'formik';
 import * as Yup from 'yup';
 
@@ -33,7 +33,7 @@ class CustomInput extends Component {
                 onBlur={onBlur}
                 value={value}
                 onChangeText={onChange}
-                status={(touched && error) ? 'danger' : 'primary'}
+                status={ touched && ((error) ? 'danger' : 'primary')}
                 style={styles.input}
                 icon={(style) => (
                     <Icon
@@ -84,7 +84,8 @@ class SignUpOne extends Component {
                 phone: Yup.string()
                     .required(fields[5].validation.msgRequired)
                     .min(fields[5].validation.minChr, fields[5].validation.message)
-                    .matches(fields[5].validation.regex, fields[5].validation.message)
+                    .matches(fields[5].validation.regex, fields[5].validation.message),
+                isAgree: Yup.boolean().oneOf([true])
             }
         )
 
@@ -97,18 +98,29 @@ class SignUpOne extends Component {
             >
                 <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                     <ScrollView>
-                        <View
+                        <Layout
                             style={styles.titleContainer}
                         >
                             <Text
                                 category='h1'
                                 style={styles.titleText}
-                            >SignUp</Text>
-                            <Text
-                                category='h1'
-                                style={[styles.titleText, { fontSize: 15, fontWeight: '200' }]}
-                            >Register your account</Text>
-                        </View>
+                            >SIGN UP</Text>
+                            <TouchableOpacity
+                                style={[styles.rowContainer]}
+                            >
+                                <Text
+                                    category='h1'
+                                    style={[styles.titleText, { fontSize: 20 }]}
+                                >Sign in</Text>
+                                <Icon
+                                    name={'arrow-forward-outline'}
+                                    tintColor={'#fff'}
+                                    width={30}
+                                    marginHorizontal={5}
+                                    height={30}
+                                />
+                            </TouchableOpacity>
+                        </Layout>
                         <Formik
                             initialValues={
                                 {
@@ -118,6 +130,7 @@ class SignUpOne extends Component {
                                     firstName: '',
                                     lastName: '',
                                     phone: '',
+                                    isAgree: false,
 
                                 }
                             }
@@ -194,6 +207,7 @@ class SignUpOne extends Component {
                                             value={formikProps.values.phone}
                                             error={formikProps.errors.phone}
                                             iconName={'phone-outline'}
+                                            
                                         />
                                         <CustomInput
                                             field={fields[1]}
@@ -216,11 +230,12 @@ class SignUpOne extends Component {
                                             secure={true}
                                         />
                                     </View>
-                                    <View>
-                                        {/* <CheckBox 
-                                            checked={this.state.checked}
-                                            onChange={this.onChange}
-                                        /> */}
+                                    <View style={styles.buttonContainer}>
+                                        <CheckBox
+                                            checked={formikProps.values.isAgree}
+                                            onChange={formikProps.handleChange('isAgree')}
+                                            text={"By creating account i agree to the Terms of Use and Privacy Policy"}
+                                        />
                                         <Button
                                             onPress={formikProps.handleSubmit}
                                             size="large"
@@ -257,21 +272,25 @@ const styles = StyleSheet.create({
     rowContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent : 'space-evenly'
+        justifyContent: 'space-evenly'
     },
     wrapper: {
         flex: 1,
         alignItems: 'stretch'
     },
     titleContainer: {
-        alignItems: 'center',
+        backgroundColor: 'transparent',
+        alignItems: 'flex-end',
         height: 180,
-        justifyContent: 'center'
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        paddingHorizontal: 20,
+        paddingBottom: 20
     },
     formContainer: {
         paddingVertical: 20,
         paddingHorizontal: 20,
-        justifyContent: 'space-between',
+        //justifyContent: 'space-between',
         flexGrow: 1,
         backgroundColor: '#fff',
     },
@@ -288,6 +307,9 @@ const styles = StyleSheet.create({
     input: {
         marginTop: '2%'
     },
+    buttonContainer: {
+        marginTop: 25
+    }
 
 })
 
