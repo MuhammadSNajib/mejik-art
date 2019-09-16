@@ -42,15 +42,12 @@ const props = {
     ],
     btnFollow: {
         label: 'Follow',
-        onPress: () => {
-            alert('follow')
-        }
+        onPress: action('FollowBtnPress')
     },
     btnMsg: {
         label: 'Message',
-        onPress: () => {
-            alert('Message')
-        }
+        onPress: action('MsgBtnPress')
+        
     }
 }
 
