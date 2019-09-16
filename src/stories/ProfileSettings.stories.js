@@ -19,6 +19,9 @@ const props = {
         height : 123,
         weight : 30,
     },
+    btnEditAvatar: {
+        onPress: action("onPressEditAvatar")
+    },
     btnSave: {
         label: 'Save',
         onPress: action("onSave")
@@ -27,7 +30,7 @@ const props = {
 
 
 
-storiesOf('Profile', module)
+storiesOf('Profile Setting', module)
     .addDecorator(withKnobs)
     .add('Option 1', () => {
         const data = object('data', props.data)
@@ -36,6 +39,7 @@ storiesOf('Profile', module)
             <ProfileSettingsOne
                 data={data}
                 btnSave={btnSave}
+                btnEditAvatar={props.btnEditAvatar}
             />
         )
     });

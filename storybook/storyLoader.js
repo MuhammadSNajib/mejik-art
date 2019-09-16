@@ -7,6 +7,7 @@
 function loadStories() {
   require('../src/stories/ForgotPassword.stories');
   require('../src/stories/Profile.stories');
+  require('../src/stories/ProfileSettings.stories');
   require('../src/stories/SignIn.stories');
   require('../src/stories/SignUp.stories');
   
@@ -15,6 +16,7 @@ function loadStories() {
 const stories = [
   '../src/stories/ForgotPassword.stories',
   '../src/stories/Profile.stories',
+  '../src/stories/ProfileSettings.stories',
   '../src/stories/SignIn.stories',
   '../src/stories/SignUp.stories',
   
