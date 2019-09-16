@@ -29,6 +29,7 @@ const props = {
             description : 'I bought a new cat yesterday and i love it very much!!!',
             likes : 5000,
             comments : 300,
+            postedAt : 'Today, 10.12 AM'
         },
         {
             image : 'https://foodsafetynewsfullservice.marlersites.com/files/2017/07/pizza-in-box.jpg',
@@ -36,6 +37,7 @@ const props = {
             description : 'There’s no better feeling in the world than a warm pizza box on your lap',
             likes : 200,
             comments : 15,
+            postedAt : 'Yesterday, 03.30 PM'
         },
     ],
     btnFollow: {
