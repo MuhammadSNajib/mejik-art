@@ -4,7 +4,10 @@ import { storiesOf } from '@storybook/react-native';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, object, text, number, } from '@storybook/addon-knobs';
 
-import SignUp from './../layouts/auth/signup';
+import SignUpOne from './../layouts/auth/signup/SignUpOne';
+import SignUpTwo from './../layouts/auth/signup/SignUpTwo';
+import SignUpThree from './../layouts/auth/signup/SignUpThree';
+import SignUpFour from './../layouts/auth/signup/SignUpFour';
 
 const props = {
     option: 1,
@@ -16,25 +19,19 @@ const props = {
             name: 'twitter',
             borderColor: '#1DA1F2',
             color: '#1DA1F2',
-            onPress: () => {
-                alert('twitter')
-            }
+            onPress: action('onPressTwitter')
         },
         {
             name: 'google',
             borderColor: '#DB4437',
             color: '#DB4437',
-            onPress: () => {
-                alert('google')
-            }
+            onPress: action('onPressGoogle')
         },
         {
             name: 'facebook',
             borderColor: '#4267b2',
             color: '#4267b2',
-            onPress: () => {
-                alert('facebook')
-            }
+            onPress: action('onPressFacebook')
         }
     ],
     fields: [
@@ -88,40 +85,75 @@ const props = {
             placeholder: 'Insert your phone number',
             validation: {
                 msgRequired: 'Required !',
-                minChr : 12,
+                minChr: 12,
                 regex: /\+?([ -]?\d+)+|\(\d+\)([ -]\d+)/,
                 message: 'Phone Number is Not Valid!'
             }
         },
 
-    
+
 
 
     ],
     btnSubmit: {
         label: 'Sign Up',
-        onPress: (value) => {
-            alert(JSON.stringify(value))
-        }
+        onPress: action('OnPress')
     }
 }
 
-storiesOf('Layout', module)
+storiesOf('Sign Up', module)
     .addDecorator(withKnobs)
-    .add('SignUp', () => {
-        const option = number("option", props.option)
+    .add('Option 1', () => {
         const bgImg = object('bgImg', props.bgImg)
         const fields = object("fields", props.fields)
         const socialButtons = object("socialButtons", props.socialButtons)
         const btnSubmit = object("btnSubmit", props.btnSubmit)
 
         return (
-            <SignUp
-                option={option}
+            <SignUpOne
                 fields={fields}
                 bgImg={bgImg}
                 btnSubmit={btnSubmit}
                 socialButtons={socialButtons}
             />
         )
-    });
+    })
+    .add('Option 2', () => {
+        const fields = object("fields", props.fields)
+        const btnSubmit = object("btnSubmit", props.btnSubmit)
+
+        return (
+            <SignUpTwo
+                fields={fields}
+                btnSubmit={btnSubmit}
+            />
+        )
+    })
+    .add('Option 3', () => {
+        const bgImg = object('bgImg', props.bgImg)
+        const fields = object("fields", props.fields)
+        const btnSubmit = object("btnSubmit", props.btnSubmit)
+
+        return (
+            <SignUpThree
+                fields={fields}
+                bgImg={bgImg}
+                btnSubmit={btnSubmit}
+            />
+        )
+    })
+    .add('Option 4', () => {
+        const bgImg = object('bgImg', props.bgImg)
+        const fields = object("fields", props.fields)
+        const socialButtons = object("socialButtons", props.socialButtons)
+        const btnSubmit = object("btnSubmit", props.btnSubmit)
+
+        return (
+            <SignUpFour
+                fields={fields}
+                bgImg={bgImg}
+                btnSubmit={btnSubmit}
+                socialButtons={socialButtons}
+            />
+        )
+    })

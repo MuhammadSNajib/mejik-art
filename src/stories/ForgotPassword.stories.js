@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react-native';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, object, text, number, } from '@storybook/addon-knobs';
 
-import ForgotPassword from './../layouts/auth/forgot_password';
+import ForgotPassword from './../layouts/auth/forgot_password/ForgotPasswordOne';
 
 const props = {
   option: 1,
@@ -23,24 +23,21 @@ const props = {
   ],
   btnSubmit: {
     label: 'Reset Password',
-    onPress: (value) => {
-      action('OnPress()')
-    }
+    onPress: action('OnPress')
+    
   }
 }
 
 
 
-storiesOf('Layout', module)
+storiesOf('Forgot Password', module)
   .addDecorator(withKnobs)
-  .add('ForgotPassword', () => {
-    const option = number("option", props.option)
+  .add('Option 1', () => {
     const bgImg = object('bgImg', props.bgImg)
     const fields = object("fields", props.fields)
     const btnSubmit = object("btnSubmit", props.btnSubmit)
     return (
       <ForgotPassword
-        option={option}
         bgImg={bgImg}
         fields={fields}
         btnSubmit={btnSubmit}

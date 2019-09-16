@@ -63,8 +63,6 @@ class SignUpOne extends Component {
         const {
             fields,
             btnSubmit,
-            socialButtons,
-            bgImg,
         } = this.props;
         const validationSchema = Yup.object().shape(
             {
@@ -93,10 +91,8 @@ class SignUpOne extends Component {
 
         return (
 
-            <ImageBackground
+            <View
                 style={styles.wrapper}
-                resizeMode='stretch'
-                source={{ uri: bgImg.url }}
             >
                 <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                     <ScrollView>
@@ -219,7 +215,7 @@ class SignUpOne extends Component {
                         </Formik>
                     </ScrollView>
                 </KeyboardAvoidingView>
-            </ImageBackground>
+            </View>
         );
     }
 }

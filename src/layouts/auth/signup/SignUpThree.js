@@ -62,7 +62,6 @@ class SignUpThree extends Component {
     const {
       fields,
       btnSubmit,
-      socialButtons,
       bgImg,
     } = this.props;
 
