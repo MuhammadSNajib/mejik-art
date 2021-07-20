@@ -26,7 +26,7 @@
     "emotion-theming": "^10.0.17",
     "formik": "^1.5.8",
     "react": "16.8.6",
-    "react-native": "0.60.5",
+    "react-native": "0.62.3",
     "react-native-svg": "^9.9.3",
     "react-native-ui-kitten": "^4.2.0-beta.2",
     "react-native-web": "^0.11.7",
